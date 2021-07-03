@@ -1,0 +1,98 @@
+
+<div class="search-div">
+  
+  <nav aria-label="breadcrumb" style="margin-left: 1%;">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a [routerLink]="['/books']">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Books</li>
+    </ol>
+  </nav>
+  
+  <mat-form-field class="search-form-field" floatLabel="never">
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey"  (click)="onSearchClear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+</div>
+
+<div class="main-content"  style="margin-top: 0%;">
+  <div class="container-fluid" style="margin-top: 1%;">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-success">
+                      <h4 class="card-title font-weight-bold"> Books</h4>
+                    
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                       
+                          <table class="table">
+                            
+                              <mat-table [dataSource]="SettingData"  class="mat-elevation-z8"  matSort>
+                                <ng-container matColumnDef="title">
+                                  <mat-header-cell *matHeaderCellDef  mat-sort-header  >Title</mat-header-cell>
+                                  <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="image">
+                                  <mat-header-cell *matHeaderCellDef  mat-sort-header  >Image</mat-header-cell>
+                                  <mat-cell *matCellDef="let element"><img [src]="element.thumbnailUrl" /></mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="isbn">
+                                  <mat-header-cell *matHeaderCellDef  mat-sort-header  >isbn</mat-header-cell>
+                                  <mat-cell *matCellDef="let element">{{element.isbn}}</mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="pageCount">
+                                  <mat-header-cell *matHeaderCellDef  mat-sort-header  >pageCount</mat-header-cell>
+                                  <mat-cell *matCellDef="let element">{{element.pageCount}}</mat-cell>
+                                </ng-container> 
+                                <ng-container matColumnDef="publishedDate.$date">
+                                  <mat-header-cell *matHeaderCellDef  mat-sort-header  >publishedDate</mat-header-cell>
+                                  <mat-cell *matCellDef="let element">{{element.$date}}</mat-cell>
+                                </ng-container> 
+                          
+                                
+                                 <ng-container matColumnDef="shortDescription">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header >shortDescription</mat-header-cell>
+                                  <mat-cell *matCellDef="let element">{{element.shortDescription}}</mat-cell>
+                                </ng-container>
+                                 <ng-container matColumnDef="longDescription">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header >longDescription</mat-header-cell>
+                                  <mat-cell *matCellDef="let element" class="truncate-cell">{{element.longDescription}}</mat-cell>
+                                </ng-container>
+                                 <ng-container matColumnDef="status">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header >status</mat-header-cell>
+                                  <mat-cell *matCellDef="let element">{{element.status}}</mat-cell>
+                                </ng-container>
+                                 <ng-container matColumnDef="authors">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header >authors</mat-header-cell>
+                                  <mat-cell *matCellDef="let element">{{element.authors[0]}} {{element.authors[1]!=undefined ? element.authors[1] : ''}} {{element.authors[2]!=undefined ? element.authors[2] : ''}}</mat-cell>
+                                </ng-container>
+                                 <ng-container matColumnDef="categories">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header >categories</mat-header-cell>
+                                  <mat-cell *matCellDef="let element">{{element.categories[0]}} {{element.categories[1]!=undefined ? element.categories[1] : ''}} {{element.categories[2]!=undefined ? element.categories[2] : ''}}</mat-cell>
+                                </ng-container>
+                           
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                              </mat-table>
+                              <mat-paginator [length]="length" [pageSize]="10"
+                                [pageSizeOptions]="[5,10,15,25,50]"  (page)="onPaginate($event)">
+                              </mat-paginator>
+                          
+
+
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+              
+          
+      </div>
+  </div>
+</div>
